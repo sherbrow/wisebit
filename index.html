@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html manifest="manifest.appcache">
+<head>
+    <style>
+        code.number {
+            min-width: 7ex;
+            display: inline-block;
+            text-align: right;
+        }
+
+        button {
+            min-width: 80px;
+        }
+
+        a.col { text-align: center; }
+        a.engine { text-decoration: none;background: hsla(0,50%,90%,1); }
+        a.engine:hover { text-decoration: underline;background: hsla(0,50%,95%,0.5); }
+        a.engine.active { color: red;background: none; }
+
+        label.row { align-items: center; }
+        label.row .col { align-items: center; }
+
+        .bit.bit-eq {
+            text-decoration: underline;
+        }
+        .bit.bit-and {
+            font-weight: bold;
+        }
+        .bit.bit-inc {
+            color: green;
+        }
+
+        html, body { padding: 0;margin: 0;height: 100%; }
+        body {
+            max-width: 800px;
+        }
+        #vm.row.vertical {
+            min-height: 50%;
+        }
+
+        /* Checkout Ungrid Flex flavor  http://sherbrow.github.io/ungrid/flex.html */
+        @media(min-width:20em){.row{display:-webkit-flex;-webkit-flex-wrap:nowrap;display:flex;flex-wrap:nowrap}.col{-webkit-flex-grow:1;flex-grow:1}}
+        @media(min-width:20em){.row.vertical{-webkit-flex-direction:column;flex-direction:column;}}
+        @media(min-width:20em){.row.wrap{-webkit-flex-wrap:wrap;flex-wrap:wrap}}
+    </style>
+    <meta charset="utf-8">
+    <title>Wisebit</title>
+    
+</head>
+<body class="row vertical" id="vm">
+    <h1>Wisebit (alias Enum Wizard)</h1>
+    <div class="row vertical">
+        <div class="col row">
+            <form class="col row" action="" data-bind="attr: {action: document.location }, submit: addIt">
+                <textarea rows="3" class="col" name="add" data-bind="value: valuesToAdd"></textarea>
+                <button type="submit">Add</button>
+            </form>
+            <form class="col row" action="" data-bind="attr: {action: document.location }, submit: aggIt">
+                <div class="col row vertical">
+                    <input type="text" name="name" data-bind="value: valueToAgg">
+                    <textarea rows="3" class="col" name="agg" data-bind="value: valuesToAgg, attr: {placeholder: aggPlaceholder}"></textarea>
+                </div>
+                <button type="submit">Agg</button>
+            </form>
+        </div>
+        <div class="col row">
+            <div class="col row vertical wrap" data-bind="template: { name: 'value-template', foreach: values}"></div>
+            <script type="text/html" id="value-template">
+            <label class="col row bit" data-bind="attr: {for: 'b'+base}, css: { 'bit-and': base & $root.selectedValue(), 'bit-inc': base == (base & $root.selectedValue()) && base != $root.selectedValue(), 'bit-eq': base == $root.selectedValue() }"><code class="number" data-bind="text: base"></code><input type="checkbox" data-bind="attr: {id: 'b'+base}, checked: $root.checked, value: base"> <span class="col" data-bind="text: name"></span></label>
+            </script>
+            <div class="col">Legend: <br><span class="bit bit-and">AND (&amp;)</span><br><span class="bit bit-eq">equals (==)</span><br><span class="bit bit-inc">included</span></div>
+        </div>
+        <div class=""><input type="text" data-bind="value: selectedValue" size="1"></div>
+        <div class="col row" data-bind="template: { name: 'engine-template', foreach: engines, as: 'engine'}">
+        </div>
+        <script type="text/html" id="engine-template">
+        <a class="col engine" href="#" data-bind="click: function(){$root.switchEngine(engine)}, css: { active: $root.engine() == engine }, text: engine">JSON</a>
+        </script>
+    </div>
+    <input type="text" name="name" data-bind="value: engineParam, visible: engineParamVisible">
+    <textarea class="col" id="rendered" rows="8" data-bind="text: rendered"></textarea>
+    <section class="col">
+        <h2>About</h2>
+        <p>A quick and easy-to-use tool to create lists of bits to use in rights management or whatever you find it useful for</p>
+        <p>Originally drafted on <a href="http://jsbin.com/">JSBin</a>, then put on <a href="https://github.com/sherbrow/wisebit">GitHub Wisebit repo</a>. By <a href="https://twitter.com/Sherbrow">@Sherbrow</a>. Using <a href="http://knockoutjs.com">Knockout.js</a>.</p>
+        <h3>Examples</h3>
+        <div class="row" data-bind="foreach: examples">
+            <a href="#" class="col" data-bind="attr: { href: '#example-'+name, 'data-index': $index }, text: name, click: $root.doExample"></a>
+        </div>
+    </section>
+    
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script> -->
+    <script src="knockout-min.js"></script>
+    <script src="wisebit.js">
+       /**
+        *  wisebit.switchEngine(engineName);
+        *  wisebit.registerEngine(engineName, function(
+        *    // `this` is the wisebit viewmodel
+        *    values // [ { name: "State", base: 2 }, ... ]
+        *    // `this.keyedValues` = { "State": 2, ... }
+        *  ) { return "string"; });
+        *  wisebit.addValue('State');
+        *  wisebit.addValues([ { name: "State"', base: 2 }, ... ]);
+        *  wisebit.examples.push({ name: "Ex1", callback: function(wisebit){}});
+        *  wisebit.reset();
+        */
+    </script>
+</body>
+</html>
