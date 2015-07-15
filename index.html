@@ -94,14 +94,14 @@
     <script src="knockout-min.js"></script>
     <script src="wisebit.js">
        /**
-        *  wisebit.switchEngine(engineName);
-        *  wisebit.registerEngine(engineName, function(
+        *  wisebit.switchEngine("Engine name");
+        *  wisebit.registerEngine("Engine name", function(
         *    // `this` is the wisebit viewmodel
         *    values // [ { name: "State", base: 2 }, ... ]
         *    // `this.keyedValues` = { "State": 2, ... }
         *  ) { return "string"; });
-        *  wisebit.addValue('State');
-        *  wisebit.addValues([ { name: "State"', base: 2 }, ... ]);
+        *  wisebit.addValue("State");
+        *  wisebit.addValues([ { name: "State", base: 2 }, ... ]);
         *  wisebit.examples.push({ name: "Ex1", callback: function(wisebit){}});
         *  wisebit.reset();
         */

@@ -9,17 +9,17 @@ By [@Sherbrow](https://twitter.com/Sherbrow).
 Using [Knockout.js](http://knockoutjs.com).
 
 ```
-wisebit.switchEngine(engineName);
+wisebit.switchEngine("Engine Name");
 
-wisebit.registerEngine(engineName, function(
+wisebit.registerEngine("Engine Name", function(
   // `this` is the wisebit viewmodel
   values // [ { name: "State", base: 2 }, ... ]
   // `this.keyedValues` = { "State": 2, ... }
 ) { return "string"; });
 
-wisebit.addValue('State');
+wisebit.addValue("State");
 
-wisebit.addValues([ { name: "State"', base: 2 }, ... ]);
+wisebit.addValues([ { name: "State", base: 2 }, ... ]);
 
 wisebit.examples.push({ name: "Ex1", callback: function(wisebit){}});
 
