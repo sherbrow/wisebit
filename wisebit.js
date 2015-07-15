@@ -144,8 +144,22 @@
         
         self.examples = ko.observableArray([]);
         self.doExample = function(example) {
-            self.reset();
-            example.callback.call(self, self);
+            var examples = self.examples();
+            if(parseInt(example) && examples.length < example) {
+                example = examples[example]; // !
+            }
+            else if(undefined === example.callback) {
+                for(var i=0;i<examples.length;++i) {
+                    if(examples[i].name == example) {
+                        example = examples[i]; // !
+                        break;
+                    }
+                }
+            }
+            if(undefined !== example.callback) {
+                self.reset();
+                example.callback.call(self, self);
+            }
         };
     }
     
@@ -265,3 +279,9 @@ wisebit.examples([
 
     }}
 ]);
+
+var wisebit_matches = /#example-([a-z0-9 -]+)/i.exec(window.location.hash);
+
+if(wisebit_matches && undefined !== wisebit_matches[1]) {
+    wisebit.doExample(wisebit_matches[1]);
+}
