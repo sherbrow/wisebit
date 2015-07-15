@@ -26,3 +26,7 @@ wisebit.examples.push({ name: "Ex1", callback: function(wisebit){}});
 wisebit.reset();
 
 ```
+
+### Help
+
+Demo [on gfycat](http://gfycat.com/ImaginativeFlimsyFantail) or [as a gif](demo.gif?raw=true) and result [on wisebit](http://wisebit.sherbrow.fr#example-API-like)

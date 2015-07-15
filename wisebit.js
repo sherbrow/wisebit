@@ -220,7 +220,7 @@ wisebit.examples([
             {name: 'State2', base: 2 },
             {name: 'State3', base: 4 },
             {name: 'StateMask', base: 7 }
-            ]);
+        ]);
         wisebit.valueToAgg('State1|2');
         wisebit.valuesToAgg('State1\nState2');
     }},
@@ -232,7 +232,7 @@ wisebit.examples([
             {name: 'Write', base: 2 },
             {name: 'Manage', base: 4 },
             {name: 'Admin', base: 7 }
-            ]);
+        ]);
         wisebit.valueToAgg('Editor');
         wisebit.valuesToAgg('Read\nWrite');
         
@@ -245,7 +245,7 @@ wisebit.examples([
             {name: 'Write', base: 2 },
             {name: 'Read', base: 4 },
             {name: 'All', base: 7 }
-            ]);
+        ]);
     }},
     {name: 'PHP Errors', callback: function(wisebit) {
         
@@ -276,8 +276,23 @@ wisebit.examples([
         {'base': 32767, 'name': 'E_ALL'}
         ]);
         */
-
+    }},
+    {name: 'API-like', callback: function(wisebit) {
+        
+        wisebit.switchEngine("JSON");
+        wisebit.addValues([
+            {name: 'AddCart', base: 1},
+            {name: 'RemoveCart', base: 2},
+            {name: 'CartMask', base: 3},
+            {name: 'Order', base: 4},
+            {name: 'OwnOrderInfos', base: 8},
+            {name: 'AnyOrderInfos', base: 16},
+            {name: 'OrderMask', base: 28},
+            {name: 'ManageApiKeys', base: 32},
+            {name: 'ApiMask', base: 63}
+        ]);
     }}
+
 ]);
 
 var wisebit_matches = /#example-([a-z0-9 -]+)/i.exec(window.location.hash);
