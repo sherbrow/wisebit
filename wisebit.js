@@ -179,6 +179,15 @@
             str += ')';
         return str;
     });
+    vm.registerEngine('PHP\'', function(values) {
+        var str = '[\n';
+            for(var name in this.keyedValues) {
+                str += "    '"+name+"' => "+this.keyedValues[name]+", ";
+                str += "\n";
+            }
+            str += ']';
+        return str;
+    });
     vm.registerEngine('C', function(values) {
         var str = 'enum WISEBIT {\n';
         for(var i=0;i<values.length;++i) {
@@ -276,6 +285,28 @@ wisebit.examples([
         {'base': 32767, 'name': 'E_ALL'}
         ]);
         */
+    }},
+    {name: 'Open hours', callback: function(wisebit) {
+        
+        wisebit.switchEngine("PHP'");
+        var counter = 0;
+        var base = 1;
+        var values = [];
+        for(;counter < 24;++counter) {
+            var name = ((counter<10)?'0':'')+counter%24+':00-'+(((counter+1)%24<10)?'0':'')+(counter+1)%24+':00';
+            values.push({name: name, base: base});
+            base *= 2;
+        }
+        wisebit.addValues(values);
+        wisebit.addValues([
+            {name: '24/24', base: 16777215},
+            {name: 'AM', base: 3968},
+            {name: 'PM', base: 516096},
+            {name: 'Breakfast', base: 384},
+            {name: 'Lunch', base: 12288},
+            {name: 'Dinner', base: 3670016},
+            {name: 'Night', base: 15728643}
+        ]);
     }},
     {name: 'API-like', callback: function(wisebit) {
         
